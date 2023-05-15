@@ -93,3 +93,40 @@
 ![IMG_3841](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/78c2e5d0-c287-43a5-9e13-22fcb0a79405)
 ![IMG_3842](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/dcb152f5-1bea-4670-a703-588f46d2e591)
 ![IMG_3843](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/b08d21fd-3cad-44b4-8522-6484eaa46a27)
+  
+  <br>
+  
+  
+  
+## Oracle DB 설치
+0. sudo로 로그인
+  
+  ~~~ bash
+  sudo -s
+  ~~~
+  
+1. Oracle Linux v8 개발자 채널을 활성화
+  
+  ~~~ bash
+  dnf install -y oraclelinux-developer-release-el8
+  ~~~
+  
+2. Oracle DB 23c Developer preinstall RPM Download
+  
+  ~~~ bash
+  dnf -y install oracle-database-preinstall-23c
+  ~~~
+  
+3. Oracle DB 23c Developer free RPM Download
+  
+  ~~~ bash
+  cd ~
+  sudo wget -d https://download.oracle.com/otn-pub/otn_software/db-free/oracle-database-free-23c-1.0-1.el8.x86_64.rpm
+  ~~~
+  
+4. Oracle DB 23c Free install
+  
+  ~~~ bash
+  dnf -y localinstall oracle-database-free-23c-1.0-1.el8.x86_64.rpm
+  ~~~
+  
