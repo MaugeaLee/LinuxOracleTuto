@@ -189,8 +189,229 @@
 
   
   2. Oracle DB 환경 변수 설정
-    - 이전 버전의 Oracle DB에서는 복잡한 방법으로 환경 변수를 설정해 줘야 했지만 Oracle DB 23c 에서는 Oracle DB에서 환경 변수 설정을 위한 기능을 제공한다.
+    - 이전 버전의 Oracle DB에서는 복잡한 방법으로 환경 변수를 설정해 줘야 했지만 Oracle DB 23c 에서는 Oracle DB에서 환경 변수 설정을 위한 가상환경 기능을 제공한다.
   
   ~~~ bash
+  export ORACLE_SID=FREE 
+  export ORAENV_ASK=NO 
+  . /opt/oracle/product/23c/dbhomeFree/bin/oraenv
+  ~~~
   
+  ~~~
+  (출력)-> ORACLE_SID = [root] ? FREE (입력)
+  (출력)-> ORACLE_HOME = [] ? /opt/oracle/product/23c/dbhomeFree
+  (출력)-> The Oracle base has been set to /opt/oracle (이렇게 출력되면 완료)
+  ~~~
+  
+  3. Oracle DB 실행
+    - 23c의 가상환경 기능의 불편한 점은 Oracle에 접속하는 유저가 한 차례 가상환경을 실행해 주어야 한다는 점이다.
+  
+  ~~~ bash
+  [j211@localhost ~]$ sudo -s
+  [root@localhost ~]# su - oracle
+  [oracle@localhost ~]$ . /opt/oracle/product/23c/dbhomeFree/bin/oraenv
+  ORACLE_SID = [] ? FREE # 한 차례 입력한 SID가 입력되면 가상환경이 셋팅된다.
+  the Oracle base has benn set to /opt/oracle 
+  ~~~
+  
+  ![스크린샷, 2023-05-15 01-51-32](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/2a12c162-efc7-4f04-aab0-407e77b2feab)
+
+  ~~~ bash
+  [oracle@localhost ~]$ sqlplus "/as sysdba"
+  sql > # 성공
+  ~~~
+    
+  - 가상환경이 제대로 실행되지 않는다면 아래와 같은 에러가 발생할 수 있다.
+  ![스크린샷, 2023-05-15 01-07-39](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/15a5220a-73c6-4170-8845-485f4c681ae5)
+
+  
+  ~~~ bash
+  su - oracle
+  # 오라클 유저로 변경
+  ~~~
+  
+  - 오라클 사용자로 변경하는 방식은 전용 사용자로 변경함으로써 다른 사용자와의 패키지 설정 중복을 및 환경 변수 설정 충돌을 방지 하기 위하여 진행한다.
+  - 이러한 문제점을 고려하지 않는다면 root 및 다른 사용자에서도 oracle DB에 접속할 수 있다.
+  
+  
+  ~~~ bash
+  [root@localhost ~]# su - j211 # j211 유저로 변경
+  [j211@localhost ~]$ . /opt/oracle/product/23c/dbhomeFree/bin/oraenv
+  ORACLE_SID = [] ? FREE
+  the Oracle base has been set to /opt/oracle
+  [j211@localhost ~]$ sqlplus "/as sysdba"
+  sql>
+  ~~~
+  
+  
+  4. Oracle DB CharSet
+    - 23v의 OracleDB 설정은 한글 출력을 지원하지 않도록 설정되어 있다.
+    - 때문에 Linux OS 시스템을 통해 한글이 출력되어야 할 상황에서 ???로 Char 깨짐이 발생한다.
+  
+  ![스크린샷, 2023-05-15 03-02-24](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/03329e94-de9d-471a-a2fe-2630f49336fa)
+<br>
+    - 이 때 환경변수를 셋팅해줌으로써 텍스트 포멧 코드를 설정해 줄 수 있다.
+    - OracleDB oraenv로는 설정해 줄 수 없어 .bashrc 파일에 코드를 추가해야 한다.
+  
+  ~~~ bash
+  [oracle@localhost ~]$ nano ~/.bashrc
+  export NLS_LANG=KOREAN_KOREA.AL32UTF8
+  [oracle@localhost ~]$ source ~/.bashrc
+  ~~~
+  
+  - 사용자를 oracle 유저로 한정하지 않고 전체 사용자에게 적용시키고 싶다면 아래의 진행을 따른다.
+  
+  ~~~bash
+  [root@localhost ~]# nano /etc/bashrc
+  export NLS_LANG=KOREAN_KOREA.AL32UTF8
+  [root@loaclhost ~]# source /etc/bashrc
+  ~~~
+  
+  
+  - 이후 한글 문자열 깨짐이 발생하지 않게 된다.
+  
+  ![스크린샷, 2023-05-15 02-23-29](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/007f2c87-ddda-4e21-aa03-d953146e7258)
+
+  
+## Oracle DB 사용
+  1. Oracle DB의 유저 생성
+    - Oracle DB를 처음 실행했을때 가장 먼저 user-name 및 password의 작성을 요구한다.
+  
+  ~~~ bash
+  user-name: system # default
+  password :        # OracleDB configure 시에 정한 pw
+  ~~~
+  
+ ![스크린샷, 2023-05-15 02-23-14](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/b0206bf9-e225-4347-9dcd-d510284d3821)
+
+  
+    - 이러한 작업에서 옳은 user-name과 pw를 입력해도 계속해서 오류가 발생할 수 있다.
+      - ex) ORA-01017: 사용자명/비밀번호가 부적합, 로그온 할 수 없습니다.
+      - ex) ORA-01017: invalid username/password; logon denied.
+    - 그럴 때는 oracle-free-23c 서버가 실행되지 않았을 가능성이 높다.
+  
+  ~~~bash
+  [oracle@localhost ~]$ systemctl start oracle-free-23c
+  [oracle@localhost ~]$ systemctl status oracle-free-23c # 동작상태 확인
+  [oracle@localhost ~]$ sqlplus "/as sysdba"
+  ~~~
+  
+![스크린샷, 2023-05-15 02-23-14](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/a1dda21b-acc0-4125-82f8-243fbe3f2cfc)
+  <br>
+  
+  2. Oracle DB 관리자 모드
+    - Oracle DB의 관리자 모드를 위해선 아래와 같이 입력한다.
+  
+  ~~~ bash
+  [oracle@localhost ~]$ sqlplus "/as sysdba"  # Oracle DB 실행시 관리자 모드로
+  
+  or
+  
+  sql> conn/as sysdba # Oracle DB 실행 도중 관리자 모드로 변경
+  ~~~
+  
+![스크린샷, 2023-05-15 02-23-29](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/21450fb7-8482-4fe2-afa4-aa94de776279)
+<br>
+  
+  3. Oracle DB 계정 추가
+    - 다수의 유저가 DB를 사용한다면 계정을 추가생성 할 수 있어야 한다.
+      - 이 때 DB의 공통 계정 분류를 위해 오라클에서는 계정 명 앞에 C##을 붙이도록 권장하고 있다.
+      - ex) C##j211
+  
+  ~~~ sql
+  SQL> create user [id] identified by [pw];
+  # create user C##j211 identified by 1004;
+  ~~~
+  
+  ![스크린샷, 2023-05-15 02-26-00](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/db9dd2c2-1ce0-4a1f-b9bc-32f7f53ce325)
+
+  <br>
+  
+  4. Oracle DB 계정 권한 부여
+    - 막 생성한 계정은 읽기 기능만을 가지고 있다.
+    - 일반적인 DB의 CRUD를 위해 읽기/쓰기 기능을 부여해야 한다.
+      - connect : 접속 권한
+      - resource : 객체 및 데이터 조작 권한
+      - dba
+  
+  ~~~ sql
+  SQL> grant [권한] to [id];
+  # grant connect, resource, dba to C##j211;
+  ~~~
+  
+  ![스크린샷, 2023-05-15 02-27-38](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/327fc12d-b723-45a2-9708-b3af38fb16f6)
+<br>
+  
+  5. Oracle DB 변경 내용 커밋 하기
+    - Oracle DB는 수정 내용을 즉시 수행하지 않는다
+    - 즉시 수행을 위해서 commit 명령을 지시해야 한다.
+  
+  ~~~ sql
+  SQL> commit;
+  ~~~
+  
+![스크린샷, 2023-05-15 02-27-47](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/25a38e77-f50b-4a41-8e7d-cc919a05d2c6)
+<br>
+  
+  6. 계정 확인
+    - 이전 과정에서 생성한 user를 조회한다.
+  
+  ~~~sql
+  SQL> select * from all_users;
+  ~~~
+  
+  ![스크린샷, 2023-05-15 02-28-00](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/6e31f7a9-db3f-4f53-966c-b522189263f8)
+  ![스크린샷, 2023-05-15 03-02-12](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/6a529254-4771-46ec-a24c-8cde6517c00e)
+
+  <br>
+  
+  7. 테이블 생성
+    - mysql과 같이 테이블을 생성할 수 있다.
+  
+  ~~~sql
+  SQL> create TABLE test
+  (
+    test_id     NUMBER(4)     NOT NULL,
+    test_data   VARCHAR2(10)  
+  );
+  ~~~
+  
+  ![스크린샷, 2023-05-15 02-54-34](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/4be5fa62-ac07-4065-8fcf-f6b6ba3b0e3c)
+
+  
+  8. 테이블에 데이터 입력
+    - mysql과 같이 insert 문을 수행할 수 있다.
+    - <b>문자열의 경우 쌍따옴표를 인식할 수 없어 따옴표로 진행해야 한다.</b>
+  
+  ~~~sql
+  SQL> insert into test(test_id, test_data) values(0, 'hello');
+  ~~~
+  
+  ![스크린샷, 2023-05-15 02-56-51](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/7493d06b-3463-4991-af3b-87c1f60a33c7)
+  <br>
+  
+  9. 테이블의 데이터 조회
+    - mysql과 같이 select 문을 수행할 수 있다.
+  
+  ~~~sql
+  SQL> select * from test
+  ~~~
+  
+![스크린샷, 2023-05-15 02-57-00](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/4ec00ec3-1f68-4e6c-ab60-c1c3b62cb024)
+
+  
+  10. Oracle DB version 확인
+    - Oracle DB의 버전을 잊었다면 아래의 코드로 확인 할 수 있다.
+  
+  ~~~ sql
+  SQL> select * from V$VERSION;
+  ~~~
+  
+  ![스크린샷, 2023-05-15 03-17-22](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/0ed6d8a8-3564-485f-ba81-4db8909f813c)
+  
+  11. Oracle DB 종료
+  
+  ~~~sql
+  SQL> exit
+  ~~~
   
