@@ -55,9 +55,17 @@
 
 <img width="1017" alt="스크린샷 2023-05-15 오전 12 36 57" src="https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/937a9237-d6b2-429d-8497-54fcdb949475">
 
+<p>
+  
 2. OS 부팅 USB 만들기
 - 부팅 USB MANAGER 소프트웨어를 통해 부팅 USB를 만든다.
 - https://balenaetcher.en.softonic.com
   - 부팅 Manager 소프트웨어 설치는 생략
-- https://balenaetcher.en.softonic
-
+  <br>
+<img width="682" alt="스크린샷 2023-05-15 오후 6 33 47" src="https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/f8586f40-5375-4b7e-b2da-74dc769b0edf"><br>
+  - 가상 이미지 파일
+  <br>
+<img width="912" alt="스크린샷 2023-05-14 오후 4 28 51" src="https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/7bbb46f5-3a2a-4ca2-a9d3-f44f073a71fb">
+<img width="912" alt="스크린샷 2023-05-14 오후 4 28 55" src="https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/2c9dbc52-00e6-432c-bcf8-5e8c45d8f314">
+<img width="912" alt="스크린샷 2023-05-14 오후 4 29 38" src="https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/7b3a4e6f-e904-44c2-b217-6992fe55e56a">
+<img width="912" alt="스크린샷 2023-05-14 오후 4 32 28" src="https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/e7a35af7-cde1-4f74-a4d6-0766d8277e34">
