@@ -44,3 +44,20 @@
   <b> PE, XE < SE < EE </b><br>
   에디션은 위와 같은 레벨로 정리 할 수 있음
 </div>
+
+
+## 오라클 Linux v8 설치
+- Linux OS 중 Oracle 제공 소프트웨어 기능을 강화한 Oracle Linux OS를 설치한다.
+
+1. OS의 가상 이미지 파일 다운
+- https://yum.oracle.com/oracle-linux-isos.html#Mirrors
+- 위 경로에서 가상 설치 파일을 다운로드 한다.
+
+<img width="1017" alt="스크린샷 2023-05-15 오전 12 36 57" src="https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/937a9237-d6b2-429d-8497-54fcdb949475">
+
+2. OS 부팅 USB 만들기
+- 부팅 USB MANAGER 소프트웨어를 통해 부팅 USB를 만든다.
+- https://balenaetcher.en.softonic.com
+  - 부팅 Manager 소프트웨어 설치는 생략
+- https://balenaetcher.en.softonic
+
