@@ -50,22 +50,46 @@
 - Linux OS 중 Oracle 제공 소프트웨어 기능을 강화한 Oracle Linux OS를 설치한다.
 
 1. OS의 가상 이미지 파일 다운
-- https://yum.oracle.com/oracle-linux-isos.html#Mirrors
-- 위 경로에서 가상 설치 파일을 다운로드 한다.
+  - https://yum.oracle.com/oracle-linux-isos.html#Mirrors
+  - 위 경로에서 가상 설치 파일을 다운로드 한다.
 
 <img width="1017" alt="스크린샷 2023-05-15 오전 12 36 57" src="https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/937a9237-d6b2-429d-8497-54fcdb949475">
 
 <p>
   
 2. OS 부팅 USB 만들기
-- 부팅 USB MANAGER 소프트웨어를 통해 부팅 USB를 만든다.
-- https://balenaetcher.en.softonic.com
-  - 부팅 Manager 소프트웨어 설치는 생략
+  - 부팅 USB MANAGER 소프트웨어를 통해 부팅 USB를 만든다.
+  - https://balenaetcher.en.softonic.com
+    - 부팅 Manager 소프트웨어 설치는 생략
   <br>
 <img width="682" alt="스크린샷 2023-05-15 오후 6 33 47" src="https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/f8586f40-5375-4b7e-b2da-74dc769b0edf"><br>
-  - 가상 이미지 파일
+    - 가상 이미지 파일
   <br>
 <img width="912" alt="스크린샷 2023-05-14 오후 4 28 51" src="https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/7bbb46f5-3a2a-4ca2-a9d3-f44f073a71fb">
 <img width="912" alt="스크린샷 2023-05-14 오후 4 28 55" src="https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/2c9dbc52-00e6-432c-bcf8-5e8c45d8f314">
 <img width="912" alt="스크린샷 2023-05-14 오후 4 29 38" src="https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/7b3a4e6f-e904-44c2-b217-6992fe55e56a">
 <img width="912" alt="스크린샷 2023-05-14 오후 4 32 28" src="https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/e7a35af7-cde1-4f74-a4d6-0766d8277e34">
+
+<br>
+
+3. OS 설치 PC의 바이오스 설정을 통해 부팅장치 순위 조정
+  - 전주대 삼성 컴퓨터 바이오스 진입
+    - PC Power On 직후 F2 연타
+ 
+  - [부팅] -> [부팅 순위 정하기] -> [1순위 부팅: (부팅 USB)]
+  - 저장 후 재부팅
+  
+<br>
+  
+4. Linux Oracle 설치 진행
+ ![IMG_3832](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/90173306-1c7c-4147-b5db-4dfd3c2087e2)
+![IMG_3834](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/90d0ba9c-8565-406e-b8c5-eec4f2863a5d)
+![IMG_3835](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/537c39d9-005a-4a8d-be53-c20a60d0190f)
+![IMG_3836](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/780391ce-c2e2-4b7c-9207-9834c1fd2dfd)
+![IMG_3837](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/77dbdc1c-81a3-4853-b964-570c5afe0fde)
+![IMG_3838](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/dde04b5f-41c6-4c32-bf7e-142405b927f9)
+![IMG_3839](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/ce9c3a4b-cc37-415a-9b54-8575705b48a9)
+![IMG_3840](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/f695c743-6e7a-4799-8d55-e9cabf06b7ee)
+![IMG_3841](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/78c2e5d0-c287-43a5-9e13-22fcb0a79405)
+![IMG_3842](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/dcb152f5-1bea-4670-a703-588f46d2e591)
+![IMG_3843](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/b08d21fd-3cad-44b4-8522-6484eaa46a27)
