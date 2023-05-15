@@ -177,14 +177,16 @@
 ## Oracle DB 작동
   1. Oracle DB 설정
     - 오라클 DB의 root 사용자를 생성한다.
+      - root 계정의 비밀번호 입력시에 글씨가 표시되지 않는 것이 정상이다.
   
   ~~~ bash
   sudo -s 
   /etc/init.d/oracle-free-23c configure
-  
-  root 계정 pw 입력
   ~~~
   
+![스크린샷, 2023-05-15 00-51-05](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/15389bda-c16a-409e-93ba-53de9d490828)
+![스크린샷, 2023-05-15 00-55-04](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/f1f7c8eb-bf15-4d43-975e-554871c87e05)
+
   
   2. Oracle DB 환경 변수 설정
     - 이전 버전의 Oracle DB에서는 복잡한 방법으로 환경 변수를 설정해 줘야 했지만 Oracle DB 23c 에서는 Oracle DB에서 환경 변수 설정을 위한 기능을 제공한다.
