@@ -110,6 +110,8 @@
   ~~~ bash
   dnf install -y oraclelinux-developer-release-el8
   ~~~
+
+![스크린샷, 2023-05-15 00-44-10](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/1e683a1d-4624-4497-8db0-bcb48afdfbaf)
   
 2. Oracle DB 23c Developer preinstall RPM Download
   
@@ -129,4 +131,64 @@
   ~~~ bash
   dnf -y localinstall oracle-database-free-23c-1.0-1.el8.x86_64.rpm
   ~~~
+  
+5. Oracle DB install 확인
+
+  ~~~ bash
+  cd /etc/init.d/
+  ls -al
+  oracle-free-23c 파일 확인
+  ~~~
+  
+  ![스크린샷, 2023-05-15 00-50-50](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/5b292586-4854-49a2-bee8-67d4b8c77986)
+
+6. PC 재부팅
+  
+  ~~~ bash
+  sudo reboot 
+  ~~~
+  
+7. Oracle DB server 작동 확인
+  - Active: inactive (dead) 라면 작동 정지 상태
+  
+  ~~~ bash
+  systemctl status oracle-free-23c
+  
+  or
+  
+  /etc/init.d/oracle-free-23c status
+  ~~~
+  
+  ![스크린샷, 2023-05-15 01-01-33](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/43886b77-df77-4d7b-9bee-8221ceef99dc)
+  
+8. Oracle DB server 작동 시작
+  
+  ![스크린샷, 2023-05-15 01-01-35](https://github.com/MaugeaLee/LinuxOracleTuto/assets/92789013/b7270d91-dca5-4c3a-8636-eea5676df01c)
+  
+  ~~~ bash
+  systemctl start oracle-free-23c
+  
+  or
+  
+  /etc/init.d/oracle-free-23c start
+  ~~~
+
+  
+## Oracle DB 작동
+  1. Oracle DB 설정
+    - 오라클 DB의 root 사용자를 생성한다.
+  
+  ~~~ bash
+  sudo -s 
+  /etc/init.d/oracle-free-23c configure
+  
+  root 계정 pw 입력
+  ~~~
+  
+  
+  2. Oracle DB 환경 변수 설정
+    - 이전 버전의 Oracle DB에서는 복잡한 방법으로 환경 변수를 설정해 줘야 했지만 Oracle DB 23c 에서는 Oracle DB에서 환경 변수 설정을 위한 기능을 제공한다.
+  
+  ~~~ bash
+  
   
